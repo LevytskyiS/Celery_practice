@@ -1,0 +1,20 @@
+1. pip install celery[redis]
+2. docker-compose.yml 
+version: "3"
+services:
+  postgres:
+    image: redis
+    ports:
+      - "6379:6379"
+
+3. celery -A tasks worker -l info (tasks - name имя файла, в которои есть объект класса Celery, а также функции с прикрепленными декораторами)
+4. Функции вызываются в отдельном файле -> <название функции>.delay(args, kwargs)
+5. Так как на Windows Celery нормально не хочет работать из коробки, то необходимо еще установить eventlet (pip install eventlet)
+6. Создать файл celeryconfig.py и в него записать 2 опции:
+imports = ("tasks",)
+result_backend = "redis://localhost:6379"
+7. app.config_from_object("celeryconfig") надо добавить в файл tasks
+8. Запускать тогда надо с pool -> celery -A tasks worker -l info --pool=eventlet
+(Как минимум, таски теперь выполняются, но все равно нельзя проверить состояние или вызвать/обратиться к методам и аттрибутам)
+
+И всё работает :)
