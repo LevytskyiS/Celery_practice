@@ -18,3 +18,11 @@ result_backend = "redis://localhost:6379"
 (Как минимум, таски теперь выполняются, но все равно нельзя проверить состояние или вызвать/обратиться к методам и аттрибутам)
 
 И всё работает :)
+
+9. Установить flower (веб-интерфейс для мониторинга задач) -> pip install flower
+10. Запускать надо и worker, и flower
+celery -A tasks worker -l info --pool=eventlet
+celery -A tasks flower -l info --pool=eventlet
+Check -> localhost:5555
+
+Тогда всё успешно мониторится

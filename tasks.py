@@ -8,8 +8,9 @@ app.config_from_object("celeryconfig")
 
 @app.task
 def add(x, y):
-    time.sleep(2)
-    return x + y
+    time.sleep(5)
+    result = x * y
+    return result
 
 
 # celery -A tasks worker -l info - это комманда для запуска celery в терминале
